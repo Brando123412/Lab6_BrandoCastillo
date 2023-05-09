@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MasterChannelManager
   m_EditorClassIdentifier: 
   channelVolume: MasterVolumen
-  currentVolume: -21.714287
+  currentVolume: 1
   myMixer: {fileID: 24100000, guid: 5db39adfced3e164ab31f4e610d0d04f, type: 2}

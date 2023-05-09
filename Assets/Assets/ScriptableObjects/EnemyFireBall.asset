@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33230a4660c45e6439d40b354f93362b, type: 3}
   m_Name: EnemyFireBall
   m_EditorClassIdentifier: 
-  myAudio: {fileID: 0}
-  myGroup: {fileID: 0}
+  myAudio: {fileID: 8300000, guid: 2a9116c09d7a3d24f9b5c5e1d723fe06, type: 3}
+  myGroup: {fileID: -7209573668805208667, guid: 5db39adfced3e164ab31f4e610d0d04f, type: 2}
