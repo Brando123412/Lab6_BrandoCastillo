@@ -14,7 +14,7 @@ public class FollowMovementController : MonoBehaviour
     private bool isMoving;// Condisicion para moverse
     private bool canShoot = true;//Condicion para disparar
     [SerializeField] bool tienepoints; 
-    [SerializeField] AudioClip audioFire; 
+    [SerializeField] Soundscriptableobjects SoundBala;
 
     private void Start() {
         currentTarget = transform;//Al principio este target tendra el valor inicial de su mismo objeto
@@ -57,7 +57,7 @@ public class FollowMovementController : MonoBehaviour
     }
     //Esta corutine hace que el enemigo empieze a intanciar balas cada un segundo
     IEnumerator ShootBullet(){
-        Instantiate(bullet, ogreTransform.position, Quaternion.identity).SetUpVelocity(ogreRB2D.velocity, "Enemy",audioFire);
+        Instantiate(bullet, ogreTransform.position, Quaternion.identity).SetUpVelocity(ogreRB2D.velocity, "Enemy",SoundBala);
         yield return new WaitForSeconds(2f);
         canShoot = true;
     }

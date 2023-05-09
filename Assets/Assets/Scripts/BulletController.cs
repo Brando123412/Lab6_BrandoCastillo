@@ -13,11 +13,10 @@ public class BulletController : MonoBehaviour
     public event Action<int, HealthBarController> onCollision;
     /*Este metodo se utiliza para que la bala se pueda mover en la direccion de mouse, y como se llama una sola vez
     entonces solo ira al punto en el cual al momento de ser instancio, el mouse se encontraba*/
-    public void SetUpVelocity(Vector2 velocity, string newTag, AudioClip newAudio){
+    public void SetUpVelocity(Vector2 velocity, string newTag,Soundscriptableobjects myAudioSO){
         myRGB2D.velocity = velocity * velocityMultiplier;
         gameObject.tag = newTag;
-
-        GetComponent<AudioSource>().PlayOneShot(newAudio);
+        myAudioSO.CreateSound();
         DamageManager.instance.SubscribeFunction(this);
     }
     /*El OnBecameInvisible es un metodo que nos permite hacer una accion que al momento de salirno de la camara

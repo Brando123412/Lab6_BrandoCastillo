@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CameraController cameraReference;/*Hace referencia a un Cinemachine, que cuando el
     personaje reciba daño*/ 
 
-    [SerializeField] AudioClip audioFire; 
+    [SerializeField] Soundscriptableobjects SoundBala;
     private void Start() {
         GetComponent<HealthBarController>().onHit += cameraReference.CallScreenShake;/*
         Siempre y cuando el personaje reciba daño la camara se movera
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
             BulletController myBullet =  Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             //Al momento de generar la bala vamos a pasar parametros para que la bala salga en la direccion correcta y al mismo tiempo se le da el tag de player
             //audioEfectos.PlayOneShot(audioFire);
-            myBullet.SetUpVelocity(distance.normalized, gameObject.tag,audioFire);
+            myBullet.SetUpVelocity(distance.normalized, gameObject.tag,SoundBala);
         }else if(Input.GetMouseButtonDown(1)){
             Debug.Log("Left Click");
         }

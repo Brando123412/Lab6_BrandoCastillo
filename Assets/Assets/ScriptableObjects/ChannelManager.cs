@@ -1,18 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
+using TMPro;
 
-public class ChannelManager : MonoBehaviour
+[CreateAssetMenu(fileName = "ChannelManager", menuName = "ScriptableObjects/Audio/ChannelManager", order = 1)]
+public class ChannelManager : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField] string channelVolume;
+    [SerializeField] float currentVolume;
+    [SerializeField] private AudioMixer myMixer;
+    bool isMuted;
+    
+    public void UpdateVolume(Slider mySlider){
+        currentVolume= mySlider.value;
+        myMixer.SetFloat(channelVolume, Mathf.Log10(currentVolume)*20f);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void UpdateVolumeText(TMP_Text myText){
+        float valueVolume= Mathf.Round(currentVolume*100);
+        myText.text=valueVolume.ToString();
     }
+    public void muteAudio(){
+        if(isMuted){
+            myMixer.SetFloat(channelVolume, Mathf.Log10(currentVolume)*20f);
+            isMuted = false;
+        }else{
+            myMixer.SetFloat(channelVolume, -80);
+            isMuted=true;
+        }
+    }
+    
 }
