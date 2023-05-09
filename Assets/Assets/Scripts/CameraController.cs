@@ -12,11 +12,11 @@ public class CameraController : MonoBehaviour
         noise = myVC.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         //StartCoroutine(ShakeCamera(3,5f));
     }
-
+    //Esto sera llamado por el player o enemigo independientemente de quien esta recibiendo daño
     public void CallScreenShake(){
         StartCoroutine(ShakeCamera(5,0.5f));
     }
-
+    //Esta corrutina nos permite nos va a permitir mover la camara
     IEnumerator ShakeCamera(float intensity, float time){
         noise.m_AmplitudeGain = intensity;
         float totalTime = time;

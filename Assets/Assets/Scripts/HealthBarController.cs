@@ -5,23 +5,22 @@ using System;
 
 public class HealthBarController : MonoBehaviour
 {
-    [SerializeField] private int maxValue;
+    [SerializeField] private int maxValue;//Variable de vida
     [Header("Health Bar Visual Components")] 
-    [SerializeField] private RectTransform healthBar;
-    [SerializeField] private RectTransform modifiedBar;
-    [SerializeField] private float changeSpeed;
+    [SerializeField] private RectTransform healthBar;//Barra de vida
+    [SerializeField] private RectTransform modifiedBar;//Barra de viva
+    [SerializeField] private float changeSpeed;//Cambio de velocidad para la variable de vida
+    private int currentValue;//Variable de vida
+    private float _fullWidth;//Calcular la vida
+    private float TargetWidth => currentValue * _fullWidth / maxValue;//ancho de la barra de vida
+    private Coroutine updateHealthBarCoroutine;//Las corrutinas son algo que que ocurren en segundo plano
 
-    private int currentValue;
-    private float _fullWidth;
-    private float TargetWidth => currentValue * _fullWidth / maxValue;
-    private Coroutine updateHealthBarCoroutine;
-
-    public event Action onHit;
-    public event Action onDeath;
+    public event Action onHit;//Evento de recibir daño
+    public event Action onDeath;//evento de Morrirse 
 
     private void Start() {
-        currentValue = maxValue;
-        _fullWidth = healthBar.rect.width;
+        currentValue = maxValue;//La variable current toma el valor maximo de vida
+        _fullWidth = healthBar.rect.width;//creo que hace que la barra de vida sea al maximo
     }
 
     /// <summary>
@@ -29,7 +28,10 @@ public class HealthBarController : MonoBehaviour
     /// </summary>
     /// <param name="amount">El valor de vida modificada.</param>
     public void UpdateHealth(int amount){
+        /*Se declara que la variable currentValue solo puede tomar valores entre 0 y 100 ademas esto dependera 
+        de daño que pueda recibir el personaje*/
         currentValue = Mathf.Clamp(currentValue + amount, 0, maxValue);
+        //Esta llamando a evento onHit en cual dependera quien lo llame ya sea el player o los enemigos
         onHit?.Invoke();
 
         if(updateHealthBarCoroutine != null){
@@ -37,11 +39,12 @@ public class HealthBarController : MonoBehaviour
         }
         updateHealthBarCoroutine = StartCoroutine(AdjustWidthBar(amount));
 
+        //Este if esta preguntando si mi vida llego a 0, para que llame al evento de perder
         if(currentValue == 0){
             onDeath?.Invoke();
         }
     }
-
+    //Esta corrutina y el metodo de abajo hace la actualizacion de la barra de vida
     IEnumerator AdjustWidthBar(int amount){
         RectTransform targetBar = amount >= 0 ? modifiedBar : healthBar;
         RectTransform animatedBar = amount >= 0 ? healthBar : modifiedBar;

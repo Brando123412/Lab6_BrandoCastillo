@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class PatrolMovementController : MonoBehaviour
 {
-    [SerializeField] private Transform[] checkpointsPatrol;
-    [SerializeField] private Rigidbody2D myRBD2;
-    [SerializeField] private AnimatorController animatorController;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private float velocityModifier = 5f;
-    [SerializeField] private float raycastDistance = 5f;
-    [SerializeField] private LayerMask layerInteraction;
-    private Transform currentPositionTarget;
-    private int patrolPos = 0;
-    private float fastVelocity = 0f;
-    private float normalVelocity;
-
+    [SerializeField] private Transform[] checkpointsPatrol;/*Game objects para ver por que puntos se va a mover*/
+    [SerializeField] private Rigidbody2D myRBD2;/*Agarra su propio rigidbody*/
+    [SerializeField] private AnimatorController animatorController;/*hace referencia a sus animaciones*/
+    [SerializeField] private SpriteRenderer spriteRenderer;/*Para editar las propiedades de su imagene*/
+    [SerializeField] private float velocityModifier = 5f;/*Velocidad del enemigo*/
+    [SerializeField] private float raycastDistance = 5f;/*Distancia del rayo para detectar al enemigo*/
+    [SerializeField] private LayerMask layerInteraction;/*Para escojer con que layers va a interactuar el rayo*/
+    private Transform currentPositionTarget;/*transfor que se actualizara segun donde vaya el personaje*/
+    private int patrolPos = 0;/*esto hace que el enemigo vaya de un punto a otro segun su valor*/
+    private float fastVelocity = 0f;/*Velocidad al detectar el personaje*/
+    private float normalVelocity;//Velocidad normal
+    [SerializeField]bool tieneCircleCollider;
+    /*En el start estoy agustando los parametros para estrablecer los parametros*/
     private void Start() {
         currentPositionTarget = checkpointsPatrol[patrolPos];
         transform.position = currentPositionTarget.position;
@@ -23,14 +24,17 @@ public class PatrolMovementController : MonoBehaviour
         normalVelocity = velocityModifier;
         fastVelocity = velocityModifier * 2.5f;
     }
-
+    /*En el Update estoy llamando tanto a la animacion como al meotoo que hace que mi personaja vaya de un punto
+    a otro*/
     private void Update() {
-        CheckNewPoint();
-
+        if(tieneCircleCollider==false)
+        {
+            CheckNewPoint();
+        }
         animatorController.SetVelocity(velocityCharacter: myRBD2.velocity.magnitude);
     }
-
-    private void CheckNewPoint(){
+    /*Esta logica es para que el enemigo vaya de un punto a otro*/
+    public void CheckNewPoint(){
         if(Mathf.Abs((transform.position - currentPositionTarget.position).magnitude) < 0.25){
             transform.position = currentPositionTarget.position;
             patrolPos = patrolPos + 1 == checkpointsPatrol.Length? 0: patrolPos+1;
@@ -51,7 +55,7 @@ public class PatrolMovementController : MonoBehaviour
         Debug.DrawRay(transform.position, distanceTarget * raycastDistance, Color.cyan);
         
     }
-
+    //Para que el personaje gire su imagen segun donde se dirije 
     private void CheckFlip(float x_Position){
         spriteRenderer.flipX = (x_Position - transform.position.x) < 0;
     }
