@@ -10,7 +10,7 @@ public class HealthBarController : MonoBehaviour
     [SerializeField] private RectTransform healthBar;//Barra de vida
     [SerializeField] private RectTransform modifiedBar;//Barra de viva
     [SerializeField] private float changeSpeed;//Cambio de velocidad para la variable de vida
-    private int currentValue;//Variable de vida
+    public int currentValue;//Variable de vida
     private float _fullWidth;//Calcular la vida
     private float TargetWidth => currentValue * _fullWidth / maxValue;//ancho de la barra de vida
     private Coroutine updateHealthBarCoroutine;//Las corrutinas son algo que que ocurren en segundo plano

@@ -9,11 +9,13 @@ public class EnemySimpleController : MonoBehaviour
     [SerializeField] private int score = 50;//El puntaje que soltara al matarlo
     public event Action<int, HealthBarController> onCollision;/*Este evento se activara en el caso de que el objeto
     entre en collision, en este caso es el player*/
+    [SerializeField] Soundscriptableobjects SoundDamage;
     private void Start() {
         //Aqui creo que se esta mandando para suscribirnos en el evento de Damagemanager
         DamageManager.instance.SubscribeFunction(this);
         //aqui se esta suscribiendo al metodo onDeath de codigo Healthbar
         GetComponent<HealthBarController>().onDeath += OnDeath;
+        GetComponent<HealthBarController>().onHit +=SoundDamage.CreateSound;
     }
 
     private void OnDeath(){

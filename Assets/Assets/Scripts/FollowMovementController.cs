@@ -15,6 +15,7 @@ public class FollowMovementController : MonoBehaviour
     private bool canShoot = true;//Condicion para disparar
     [SerializeField] bool tienepoints; 
     [SerializeField] Soundscriptableobjects SoundBala;
+    [SerializeField] Soundscriptableobjects SoundPersecucion;
 
     private void Start() {
         currentTarget = transform;//Al principio este target tendra el valor inicial de su mismo objeto
@@ -67,6 +68,7 @@ public class FollowMovementController : MonoBehaviour
         if(other.CompareTag("Player")){
             currentTarget = other.transform;
             isFollowing = true;
+            SoundPersecucion.CreateSound();
         }
     }
 

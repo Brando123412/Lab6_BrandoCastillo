@@ -14,10 +14,14 @@ public class PlayerController : MonoBehaviour
     personaje reciba daño*/ 
 
     [SerializeField] Soundscriptableobjects SoundBala;
+    [SerializeField] Soundscriptableobjects SoundDamage;
+    [SerializeField] AudioSource lowLifeSound;
+    [SerializeField] HealthBarController lowLife;
     private void Start() {
         GetComponent<HealthBarController>().onHit += cameraReference.CallScreenShake;/*
         Siempre y cuando el personaje reciba daño la camara se movera
         Y siempre y cuando que el evento onHit se llame*/
+        GetComponent<HealthBarController>().onHit +=SoundDamage.CreateSound;
     }
 
     private void Update() {
@@ -44,6 +48,9 @@ public class PlayerController : MonoBehaviour
             myBullet.SetUpVelocity(distance.normalized, gameObject.tag,SoundBala);
         }else if(Input.GetMouseButtonDown(1)){
             Debug.Log("Left Click");
+        }
+        if(lowLife.currentValue<25){
+            lowLifeSound.Play();
         }
     }
     //Esto simplemente hace que se cambie la direccion de mirar 
