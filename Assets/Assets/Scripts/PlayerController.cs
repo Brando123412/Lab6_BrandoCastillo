@@ -76,10 +76,8 @@ public class PlayerController : MonoBehaviour
     public void OnFire(InputAction.CallbackContext value)
     {
         if (value.started) {
-            BulletController myBullet =  Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            BulletController myBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             myBullet.SetUpVelocity(distance.normalized, gameObject.tag,SoundBala);
-            /*Vector2 disparo = new Vector2((mouseInput.x - transform.position.x), (mouseInput.y - transform.position.y));
-            Instantiate(bulletPrefab, disparo, Quaternion.identity);*/
         }
     }
 }
